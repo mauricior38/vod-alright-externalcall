@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External call 02</title>
+</head>
+<body>
+
+    <div class="container">
+	<link href="https://alright-vod.goshow.com.br/videojs7/skins/nuevo/videojs.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://alright-vod.goshow.com.br/videojs7/skins/nuevo/ima.min.css" rel="stylesheet" type="text/css" />
+	<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+	<script src="https://alright-vod.goshow.com.br/videojs7/video.js"></script>
+	<script src="https://alright-vod.goshow.com.br/videojs7/plugins/videojs.ima.js"></script>
+	<script src="https://alright-vod.goshow.com.br/videojs7/plugins/videojs-contrib-ads.js"></script>
+	<script src="https://alright-vod.goshow.com.br/videojs7/nuevo.min.js"></script>
+
+	<div class="media-parent">
+		<div class="media-child">
+			<video id="player_1" class="video-js vjs-fluid" controls autoplay preload="auto" playsinline webkit-playsinline muted loop>
+				<source src="https://vod.alright.com.br:443/LiveApp/streams/750459046800055853340794.m3u8" type= "application/x-mpegURL">
+			</video>
+		</div>
+	</div>
+
+
+
+	<script>
+	var player = videojs('player_1');
+
+	var options = {
+		id: 'player_1',
+		adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_preroll_skippable&sz=640x480&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator='
+	};
+	google.ima.settings.setDisableCustomPlaybackForIOS10Plus(true); 
+	player.ima(options);
+
+	var contentPlayer =  document.getElementById('player_1_html5_api');
+	if ((navigator.userAgent.match(/iPad/i) ||
+		  navigator.userAgent.match(/Android/i)) &&
+		contentPlayer.hasAttribute('controls')) {
+	  contentPlayer.removeAttribute('controls');
+	}
+	var startEvent = 'click';
+	if (navigator.userAgent.match(/iPhone/i) ||
+		navigator.userAgent.match(/iPad/i) ||
+		navigator.userAgent.match(/Android/i)) {
+	  startEvent = 'touchend';
+	}
+	player.one(startEvent, function() {
+		player.ima.initializeAdDisplayContainer();
+	});    
+
+	</script>
+    
+</body>
+</html>
